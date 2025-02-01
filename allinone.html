@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Page</title>
+    <style>
+        /* Reset and basic styles */
+        html, body, h1, p, ul, li, nav {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Enable smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            overflow-x: hidden; /* Hide horizontal scrollbar */
+        }
+
+        /* Navigation styles */
+        nav {
+            background: #34568B;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            position: fixed; /* Fixed position to always be on top */
+            width: 100%;
+            z-index: 1000;
+        }
+
+            nav ul {
+                list-style-type: none;
+                display: flex;
+                justify-content: center;
+            }
+
+                nav ul li {
+                    padding: 10px 20px;
+                }
+
+                    nav ul li a {
+                        color: white;
+                        text-decoration: none;
+                        font-size: 18px;
+                        transition: color 0.3s;
+                    }
+
+                        nav ul li a:hover, nav ul li a:focus {
+                            color: #DAA520;
+                            text-decoration: none;
+                        }
+
+        /* Main container and section styling */
+        .main-container {
+            display: flex;
+            flex-direction: row; /* Arrange sections in a row */
+            overflow-x: auto; /* Enable horizontal scrolling */
+            scroll-snap-type: x mandatory; /* Use mandatory scroll snapping on the x-axis */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+            height: calc(100vh - 42px); /* Adjust height taking into account the nav bar */
+            margin-top: 42px; /* Offset for the fixed navbar */
+        }
+
+        .container {
+            flex: 0 0 100vw; /* Each section takes exactly the viewport width */
+            height: 100%; /* Full height of the parent container */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            scroll-snap-align: start; /* Snap align each section to start */
+        }
+
+        h1, h2 {
+            color: #34568B;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.6;
+            max-width: 600px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="main-container">
+        <section class="container" id="home">
+            <h1>Welcome to Obi's Web Page</h1>
+            <p>This is a paragraph of text in the sample HTML page. Explore the beauty of CSS styling!</p>
+        </section>
+        <section class="container" id="about">
+            <h2>About Us</h2>
+            <p>Learn more about our goals and how we work.</p>
+        </section>
+        <section class="container" id="services">
+            <h2>Our Services</h2>
+            <p>Details on the services we offer.</p>
+        </section>
+        <section class="container" id="contact">
+            <h2>Contact Us</h2>
+            <p>How to get in touch with us.</p>
+        </section>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select all links with hashes
+            const links = document.querySelectorAll('nav ul li a[href*="#"]');
+
+            // Add smooth scrolling to all links
+            links.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    // Prevent default anchor click behavior
+                    e.preventDefault();
+
+                    // Store hash
+                    const hash = this.hash;
+
+                    // Using scrollIntoView to achieve smooth scroll
+                    const target = document.querySelector(hash);
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                });
+            });
+
+            // Optional: Highlight active section in navigation
+            window.addEventListener('scroll', function () {
+                let scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+
+                links.forEach(link => {
+                    let currLink = link;
+                    let refElement = document.querySelector(currLink.getAttribute("href"));
+                    if (refElement.offsetTop <= scrollPosition && (refElement.offsetTop + refElement.offsetHeight > scrollPosition)) {
+                        document.querySelector('nav ul li a.active').classList.remove('active');
+                        currLink.classList.add('active');
+                    } else {
+                        currLink.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
